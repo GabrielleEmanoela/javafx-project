@@ -1,46 +1,35 @@
-package br.com.gabrielle.controller;
+package br.com.gabrielle.gui.controller;
 
-import br.com.gabrielle.util.Alerts;
-import br.com.gabrielle.util.Constraints;
+import br.com.gabrielle.entities.Pessoa;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.ComboBox;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class ViewController implements Initializable {
-    @FXML
-    private TextField txtNumber1, txtNumber2;
+
 
     @FXML
-    private Label labelResult;
+    private ComboBox<Pessoa> pessoaComboBox;
+    public ComboBox<Pessoa> a;
 
-    @FXML
-    private Button btSum;
 
-    @FXML
-    public void onBtSumClick() {
-        try {
-            double a = Double.parseDouble(txtNumber1.getText());
-            double b = Double.parseDouble(txtNumber2.getText());
-            double sum = a + b;
-            System.out.println(sum);
-            labelResult.setText(String.format("%.2f", sum));
-        } catch (NumberFormatException e) {
-            Alerts.showAlert("Error", "Parse error", e.getMessage(), AlertType.ERROR);
-        }
-    }
+    private ObservableList<Pessoa> observableList;
 
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        Constraints.setTextFieldDouble(txtNumber1);
-        Constraints.setTextFieldMaxLength(txtNumber1, 14);
-        Constraints.setTextFieldDouble(txtNumber2);
-        Constraints.setTextFieldMaxLength(txtNumber2, 14);
+        List<Pessoa> list = new ArrayList<>();
+        list.add(new Pessoa(1, "Gabrielle", "Av. Planalto", "62994935234"));
+        list.add(new Pessoa(2, "Eduardo", "Av. Planalto", "629466892"));
+        list.add(new Pessoa(3, "Isabela", "Rua Dr° Aquiles", "6299584554"));
+        observableList = FXCollections.observableArrayList(list);
+        pessoaComboBox.setItems(observableList);
     }
 }
